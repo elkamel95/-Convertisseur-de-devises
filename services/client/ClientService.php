@@ -1,7 +1,8 @@
 
 <?php
-echo  dirname(__FILE__) . '\SPDO.php';
 require('../../SPDO.php');
+require('../bon/bonService.php');
+
 $res = SPDO::getInstance();
 
 
@@ -29,6 +30,7 @@ if (isset($_POST['nom']) && isset($_POST['pren']) && isset($_POST['num'])) {
         header("Location: ../../index.php");
 
     }
+    BonService::add( $_SESSION["client_id"] , $_SESSION["user_id"],$res);
 
 } else {
     $msg ="erreur";}

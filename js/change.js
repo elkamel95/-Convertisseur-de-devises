@@ -64,3 +64,18 @@ function  valider() {
     document.getElementById('commit').style.display = "flex";
 }
 
+
+
+function  showList(num, id,e,j) {
+    className=j+'list';
+    if(id == "false"){
+        document.getElementsByClassName(className)[0].style.display = "flow-root";
+e.id = "true";
+
+    }else {
+
+        document.getElementsByClassName(className)[0].style.display = "none";
+        e.id = "false";
+
+    }
+}

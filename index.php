@@ -154,7 +154,7 @@ if(isset($_SESSION["client_id"])) {
 
     }      else
                 {
-                    echo '      <button class ="btn btn-success"onclick="valider()">Ajouter un autre client </button>';
+                    echo '      <button class ="btn btn-info"onclick="valider()">Ajouter un autre client </button>';
 
 
                 }
@@ -182,8 +182,11 @@ if(isset($_SESSION["client_id"])) {
                 <tbody>
                 <?php
                 $i=0;
+                if(isset($_SESSION['id_bon']))
 
-                foreach  ( $res->query('SELECT * FROM  devise ORDER BY `devise`.`id` DESC')  as $rows) {
+              {
+                  $qall = $res->query('SELECT * FROM  devise   where id_bon ='.$_SESSION['id_bon']);
+                foreach  ( $qall  as $rows) {
                     echo '
 	<form action ="model.php"  method ="POST">
 
@@ -223,7 +226,7 @@ if(isset($_SESSION["client_id"])) {
 	  </td>
 	      <td>
 		  ';
-                    foreach  ($res->query("SELECT prix FROM  tauxdevise  where id = ".$rows["ID_Taux"]."") as $row )
+                    foreach  ($res->query("SELECT prix FROM  tauxdevise  where id = ".$rows["ID_Taux"]) as $row )
                     {
                         $prixUpadate =$row['prix'] ;
                         break;
@@ -272,9 +275,9 @@ if(isset($_SESSION["client_id"])) {
 		  
 		
 	  ';
-                }
-                ?>
+                }}
 
+                ?>
 
                 </tbody>
             </table>
@@ -285,9 +288,7 @@ if(isset($_SESSION["client_id"])) {
 
 
             <?php
-            echo       $_SESSION["user_id"] ;
-            echo      $_SESSION["user_name"] ;
-            echo    $_SESSION["user_pass"] ;
+
             if($msg != null){
                 if($msg == 1){
 
@@ -312,30 +313,38 @@ opération ('.$action.') terminée avec succès
 
 
     <div class="row">
-        <div class ="col-md-3">
-            <button class="btn btn-success" onclick="valider()"> Valider </button>
-        </div>
+
 
         <div class ="col-md-8">
 		 		
-		 <span style="  margin-left: 85% ;height:30px  " class="badge badge-danger">
 		 <?php
-
          $total =0;
-         foreach  ( $res->query('SELECT * FROM  devise ORDER BY `devise`.`id` DESC')  as $row) {
+if(isset($_SESSION['id_bon']))
+
+        {	echo 	' <span style="  margin-left: 85% ;height:30px  " class="badge badge-danger">';
+
+
+            foreach  ( $res->query('SELECT * FROM  devise   where id_bon ='.$_SESSION['id_bon'])  as $row) {
              $total = $total + $row["montant_ml"];
          }
 
          echo'<input type="hidden" value= '.$total.' id="T"/>
  '.$total.''   ;
-
+}
          ?>
 	
 	</span>
 
 
         </div>
+        <div class ="col-md-3">
+            <form action="services/bon/DaoBonService.php">
 
+                <input type="hidden"  name ="totale" value=<?php   echo $total  ?> />
+
+                <button class="btn btn-success"  type="submit" > Valider </button>
+            </form>
+        </div>
     </div>
     <div class="commit center " id="commit" >
     <div class="card">
@@ -356,6 +365,7 @@ opération ('.$action.') terminée avec succès
         </div>
     </div></div>
 </div>
+
 </body>
 
 <script src="js/change.js"></script>
