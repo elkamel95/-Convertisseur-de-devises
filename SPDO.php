@@ -24,14 +24,14 @@ class SPDO
    *
    * @var string
    */
-  const DEFAULT_SQL_USER = 'root';
+  const DEFAULT_SQL_USER = 'b65fcf3db04873';
  
   /**
    * Constante: hôte de la bdd
    *
    * @var string
    */
-  const DEFAULT_SQL_HOST = 'localhost';
+  const DEFAULT_SQL_HOST = 'eu-cdbr-west-02.cleardb.net';
  
   /**
    * Constante: hôte de la bdd
@@ -45,7 +45,7 @@ class SPDO
    *
    * @var string
    */
-  const DEFAULT_SQL_DTB = 'change';
+  const DEFAULT_SQL_DTB = 'heroku_9559dea4ec51a6e';
  
   /**
    * Constructeur
@@ -57,7 +57,9 @@ class SPDO
    */
   private function __construct()
   {
-    $this->PDOInstance = new PDO('mysql:dbname='.self::DEFAULT_SQL_DTB.';host='.self::DEFAULT_SQL_HOST,self::DEFAULT_SQL_USER ,self::DEFAULT_SQL_PASS);    
+	
+	//  mysql://b65fcf3db04873:4c44c79d@eu-cdbr-west-02.cleardb.net/heroku_9559dea4ec51a6e?reconnect=true
+    $this->PDOInstance = new PDO('mysql:dbname='.self::DEFAULT_SQL_DTB.';host='.self::DEFAULT_SQL_HOST,self::DEFAULT_SQL_USER ,'4c44c79d');    
   }
  
    /**
